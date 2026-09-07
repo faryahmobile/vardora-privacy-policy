@@ -20,7 +20,7 @@
   .meta { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
   .lang-switch { margin: 1.5rem 0; font-size: 0.95rem; }
   .lang-switch a { color: #1f5ca9; text-decoration: none; font-weight: 600; }
-  ul { padding-left: 1.3rem; }
+  ul, ol { padding-left: 1.3rem; }
   li { margin-bottom: 0.4rem; }
   .contact { background: #eef4fc; border-left: 4px solid #1f5ca9; padding: 12px 16px; border-radius: 4px; }
   hr.section-divider { border: none; border-top: 2px solid #10306b; margin: 3.5rem 0; }
@@ -35,52 +35,67 @@
 
 <a id="en"></a>
 <h1>Vardora — Privacy Policy</h1>
-<p class="meta">Developer: Faryah Mobile &nbsp;|&nbsp; Effective date: August 31, 2026 &nbsp;|&nbsp; App: Vardora (com.faryahmobile.vardora)</p>
+<p class="meta">Developer: Faryah Mobile &nbsp;|&nbsp; Effective date: September 8, 2026 (replaces the August 31, 2026 version) &nbsp;|&nbsp; App: Vardora (com.faryahmobile.vardora)</p>
 
 <p>Vardora is a shift calendar app that runs largely on your device. This policy describes exactly how the app handles your data — nothing here is boilerplate; it is written to match the app's actual code.</p>
 
 <h2>Summary</h2>
 <ul>
-  <li><strong>No personal data (your name, email, or identity) is ever collected or shared with third parties for their own purposes.</strong></li>
+  <li><strong>No personal data such as your name, email address or phone number is ever requested, collected or shared.</strong></li>
   <li>The app never asks you to create an account.</li>
-  <li>Everything you enter (shift types, patterns, calendar exceptions, settings) is stored only in your device's local storage and never leaves it.</li>
+  <li>Everything you enter (shift types, patterns, workplaces, calendar exceptions, notes, wage entries, reminder settings) is stored only in your device's local storage and never leaves it.</li>
   <li>The app contains no advertising, analytics, or tracking SDKs.</li>
-  <li>A limited, anonymous network connection is used only to prevent abuse of the free trial (uninstalling and reinstalling to renew it indefinitely) and to process Vardora Pro purchases — see "Trial abuse prevention" below.</li>
+  <li>The network is used for only two things: a one-time, anonymous check that prevents abuse of the free trial (see "Trial abuse prevention"), and Vardora Pro purchases through Google Play.</li>
 </ul>
 
-<h2>What data is processed?</h2>
-<p>The shift types, shift patterns (cycles), calendar exceptions (leave/sick days, notes) and reminder preferences (on/off, time) you enter into Vardora are stored in a private SQLite database on your device. This data:</p>
+<h2>What data is processed on your device?</h2>
+<p>The shift types, shift patterns (cycles), workplaces, calendar exceptions (leave/sick days, per-day hours), notes, hourly wage entries, reminder preferences (mode, time, alarm style) and the cache used by the home screen widget are stored in the app's private storage on your device. This data:</p>
 <ul>
   <li>Stays on your device only — it is never sent to Faryah Mobile's servers or anywhere else.</li>
-  <li>Remains on your device until you delete the app; uninstalling automatically erases it via your operating system.</li>
-  <li>Can optionally be exported to a file from Settings &gt; Backup, to a location you choose (your own Google Drive, device storage, etc.) — this export never sends any data to Faryah Mobile.</li>
+  <li>Remains on your device until you delete the app; uninstalling erases it via your operating system.</li>
+  <li>Can optionally be exported to a file from Settings &gt; Backup / Restore, to a location you choose (your own Google Drive, device storage, etc.) — this export never sends any data to Faryah Mobile.</li>
 </ul>
 
-<h2>Trial abuse prevention</h2>
-<p>When your free trial starts, a one-way (SHA-256) digest of your device's hardware identifier (Android ID) is computed and stored on Google Firebase infrastructure. The original device identifier cannot be recovered from this digest. Its only purpose is to detect whether this device has already used the free trial, so the trial cannot be renewed indefinitely by uninstalling and reinstalling the app. This data is never linked to your name, email, or location, is never used for advertising, and Google does not use it for its own purposes — Firebase acts solely as our infrastructure provider (data processor). If no network connection is available, this check is simply skipped and retried later; it never blocks the app's core, offline functionality.</p>
+<h2>Trial abuse prevention — the only network use</h2>
+<p>When your free trial starts, the app performs the following through Google Firebase:</p>
+<ol>
+  <li><strong>Anonymous sign-in.</strong> Firebase Anonymous Authentication creates a random, anonymous session ID. No name, email address, phone number or other identity is requested or stored.</li>
+  <li><strong>Device digest.</strong> A one-way SHA-256 digest of your device's Android ID is stored in Cloud Firestore together with a server-side "first seen" timestamp. The original device identifier cannot be recovered from this digest. Its only purpose is to detect whether this device has already used the free trial, so the trial cannot be renewed indefinitely by uninstalling and reinstalling the app.</li>
+  <li><strong>Server time.</strong> The current server time is read so the trial cannot be extended by changing the device clock.</li>
+</ol>
+<p>This data is never linked to your name, email or location, is never used for advertising or profiling, and Google does not use it for its own purposes — Google acts solely as our data processor. During the connection your IP address is processed technically by Google's infrastructure as with any internet request. If no network connection is available, the check is skipped and retried later; it never blocks the app's offline functionality.</p>
+<p><strong>Legal basis:</strong> legitimate interest in preventing abuse of the free trial (GDPR Art. 6(1)(f); Turkish KVKK Art. 5(2)(f)). The digest is a pseudonymous identifier; we treat it with the same care as personal data.</p>
 
 <h2>Permissions</h2>
-<p>Vardora only requests the following permissions, each tied directly to a core feature:</p>
+<p>Vardora requests only the following permissions, each tied directly to reminders:</p>
 <ul>
   <li><strong>Notification permission:</strong> to show shift reminders.</li>
-  <li><strong>Exact alarm permission:</strong> so the reminder arrives at the exact time you chose.</li>
+  <li><strong>Exact alarm permission:</strong> so the reminder arrives at the exact minute you chose.</li>
+  <li><strong>Full-screen notification permission (Android 14 and later):</strong> so a reminder set to "Ring like an alarm" can open full screen on the lock screen.</li>
+  <li><strong>Battery optimization exemption (optional):</strong> requested only if you ask for it in the Reminder Reliability Wizard, so the system does not delay reminders.</li>
+  <li><strong>Boot completed:</strong> to restore scheduled reminders after the device restarts.</li>
+  <li><strong>Internet:</strong> for the two purposes described above only.</li>
 </ul>
-<p>No camera, location, contacts, files, or microphone permissions are requested. The app does declare the standard, invisible Internet permission (required for Google Play billing and the trial abuse prevention described above); it never triggers a user-facing consent prompt.</p>
+<p>No camera, location, contacts, files, or microphone permissions are requested.</p>
 
 <h2>Third-party sharing</h2>
 <p>Vardora does not share, sell, or use your data for advertising with any third party. The app contains no ad network, analytics library, or tracking SDK. Google Firebase and Google Play are used strictly as infrastructure/payment processors on our behalf, never for their own purposes.</p>
 
 <h2>In-app purchases</h2>
-<p>When you purchase Vardora Pro, the transaction is processed entirely through Google Play's billing system. Faryah Mobile never has access to your payment card details; it only stores the purchase status (active/inactive) reported by Google Play, on your device.</p>
+<p>When you purchase Vardora Pro, the transaction is processed entirely through Google Play's billing system. Faryah Mobile never has access to your payment card details; it only stores the purchase status reported by Google Play on your device and verifies the purchase signature on the device.</p>
 
-<h2>Data security and deletion</h2>
-<p>Your data is protected by Android's app sandboxing (only Vardora can access it). To delete all your data, simply uninstall the app — this permanently erases all local data. The irreversible device-identifier digest stored for trial abuse prevention is not personal data and can never be linked back to you.</p>
+<h2>Data security, retention and deletion</h2>
+<ul>
+  <li>Data on your device is protected by Android's app sandboxing (only Vardora can access it). To delete it, simply uninstall the app.</li>
+  <li>Network traffic to Google Firebase and Google Play is encrypted with TLS.</li>
+  <li>The trial record in Firebase (digest and timestamp) is kept only to prevent the free trial from being restarted on the same device. Because that purpose persists for as long as the app is offered, the record is <strong>not deleted on request</strong>: abuse prevention is an overriding legitimate interest (GDPR Art. 17(1)(c) and 21(1); Turkish KVKK Art. 7). The record contains no personal information, cannot be traced back to you, and is used for no other purpose. If the trial mechanism is ever discontinued, all records are deleted.</li>
+</ul>
 
 <h2>Children's privacy</h2>
 <p>Vardora is not directed at children and does not target users under 13.</p>
 
 <h2>Changes to this policy</h2>
-<p>If the app's data behavior changes, this page will be updated and the effective date revised. Material changes will be noted in the app's update notes.</p>
+<p>If the app's data behavior changes, this page is updated and the effective date revised. Material changes are noted in the app's update notes. This version adds the anonymous Firebase sign-in and server-time details, the full-screen alarm, battery and boot permissions, the widget cache, the legal basis, and the retention rule for the trial record.</p>
 
 <h2>Contact</h2>
 <div class="contact">
@@ -92,52 +107,67 @@
 
 <a id="tr"></a>
 <h1>Vardora — Gizlilik Politikası</h1>
-<p class="meta">Geliştirici: Faryah Mobile &nbsp;|&nbsp; Yürürlük tarihi: 31 Ağustos 2026 &nbsp;|&nbsp; Uygulama: Vardora (com.faryahmobile.vardora)</p>
+<p class="meta">Geliştirici: Faryah Mobile &nbsp;|&nbsp; Yürürlük tarihi: 8 Eylül 2026 (31 Ağustos 2026 sürümünün yerini alır) &nbsp;|&nbsp; Uygulama: Vardora (com.faryahmobile.vardora)</p>
 
 <p>Vardora, büyük ölçüde cihazınızda çalışan bir vardiya takvimi uygulamasıdır. Bu politika, uygulamanın verilerinizle ilgili gerçek davranışını açıklar — burada yazılanların hiçbiri şablon değildir, doğrudan uygulamanın kodundan derlenmiştir.</p>
 
 <h2>Özet</h2>
 <ul>
-  <li><strong>Hiçbir kişisel veri (adınız, e-postanız, kimliğiniz) toplanmaz veya kendi amaçları için kullanılmak üzere üçüncü taraflarla paylaşılmaz.</strong></li>
+  <li><strong>Adınız, e-posta adresiniz veya telefon numaranız gibi hiçbir kişisel veri istenmez, toplanmaz veya paylaşılmaz.</strong></li>
   <li>Uygulama hesap oluşturmanızı istemez.</li>
-  <li>Girdiğiniz tüm veriler (vardiya tipleri, desenler, takvim istisnaları, ayarlar) yalnızca cihazınızın yerel depolama alanında tutulur ve hiçbir zaman oradan çıkmaz.</li>
+  <li>Girdiğiniz her şey (vardiya tipleri, desenler, iş yerleri, takvim istisnaları, notlar, ücret girdileri, hatırlatma ayarları) yalnızca cihazınızın yerel depolama alanında tutulur ve oradan çıkmaz.</li>
   <li>Uygulamada reklam, analitik veya izleme SDK'sı bulunmaz.</li>
-  <li>Sınırlı, anonim bir ağ bağlantısı yalnızca ücretsiz deneme süresinin kötüye kullanılmasını (silip yeniden yükleyerek sınırsız uzatmayı) önlemek ve Vardora Pro satın alımını işlemek için kullanılır — aşağıdaki "Deneme kötüye kullanımı önleme" bölümüne bakın.</li>
+  <li>Ağ yalnız iki şey için kullanılır: ücretsiz deneme süresinin kötüye kullanılmasını önleyen tek seferlik, anonim bir kontrol ("Deneme kötüye kullanımı önleme" bölümü) ve Google Play üzerinden Vardora Pro satın alımı.</li>
 </ul>
 
-<h2>Hangi veriler işlenir?</h2>
-<p>Vardora'ya girdiğiniz vardiya tipleri, vardiya desenleri (döngüler), takvim istisnaları (izin/rapor günleri, notlar) ve hatırlatma tercihleriniz (etkin/pasif, saat) cihazınızdaki özel bir SQLite veritabanında saklanır. Bu veriler:</p>
+<h2>Cihazınızda hangi veriler işlenir?</h2>
+<p>Vardiya tipleri, vardiya desenleri (döngüler), iş yerleri, takvim istisnaları (izin/rapor günleri, güne özel saatler), notlar, saatlik ücret girdileri, hatırlatma tercihleri (mod, saat, alarm biçimi) ve ana ekran widget'ının kullandığı önbellek, cihazınızdaki özel uygulama alanında saklanır. Bu veriler:</p>
 <ul>
   <li>Yalnızca cihazınızda kalır — Faryah Mobile'ın sunucusuna veya başka hiçbir yere gönderilmez.</li>
-  <li>Uygulamayı silene kadar cihazınızda kalır; uygulamayı kaldırdığınızda işletim sisteminiz tarafından otomatik olarak silinir.</li>
-  <li>İsterseniz Ayarlar &gt; Yedekle bölümünden bir dosyaya dışa aktarabilir ve yalnızca sizin belirlediğiniz bir yere (kendi Google Drive'ınız, cihazınız vb.) kaydedebilirsiniz — bu dışa aktarma işlemi de Faryah Mobile'a hiçbir veri göndermez.</li>
+  <li>Uygulamayı silene kadar cihazınızda kalır; uygulamayı kaldırdığınızda işletim sisteminiz tarafından silinir.</li>
+  <li>İsterseniz Ayarlar &gt; Yedekle / Geri yükle bölümünden bir dosyaya dışa aktarılabilir ve yalnızca sizin belirlediğiniz bir yere (kendi Google Drive'ınız, cihazınız vb.) kaydedilebilir — bu dışa aktarma Faryah Mobile'a hiçbir veri göndermez.</li>
 </ul>
 
-<h2>Deneme kötüye kullanımı önleme</h2>
-<p>Ücretsiz deneme süreniz başladığında, cihazınızın donanım kimliğinden (Android ID) tek yönlü (SHA-256) bir özet hesaplanır ve Google Firebase altyapısında saklanır. Bu özetten cihazınızın gerçek kimliğine geri dönülemez. Tek amacı, bu cihazın daha önce ücretsiz denemeyi kullanıp kullanmadığını tespit etmektir — böylece uygulamanın silinip yeniden yüklenmesiyle deneme süresi sınırsız şekilde yenilenemez. Bu veri adınız, e-postanız veya konumunuzla hiçbir zaman ilişkilendirilmez, reklam amacıyla kullanılmaz ve Google tarafından kendi amaçları için kullanılmaz — Firebase yalnızca altyapı sağlayıcımız (veri işleyen) sıfatıyla kullanılır. Ağ bağlantısı yoksa bu kontrol basitçe atlanır ve daha sonra tekrar denenir; uygulamanın çevrimdışı çekirdek işlevini hiçbir zaman engellemez.</p>
+<h2>Deneme kötüye kullanımı önleme — tek ağ kullanımı</h2>
+<p>Ücretsiz deneme süreniz başladığında uygulama Google Firebase üzerinden şunları yapar:</p>
+<ol>
+  <li><strong>Anonim oturum.</strong> Firebase Anonymous Authentication rastgele, kimliksiz bir oturum kimliği oluşturur. Ad, e-posta, telefon numarası veya başka bir kimlik bilgisi istenmez ve saklanmaz.</li>
+  <li><strong>Cihaz özeti.</strong> Cihazınızın Android ID'sinin tek yönlü (SHA-256) özeti, sunucu tarafında damgalanan "ilk görülme" zamanıyla birlikte Cloud Firestore'a kaydedilir. Bu özetten cihazınızın gerçek kimliğine geri dönülemez. Tek amacı, bu cihazın daha önce ücretsiz denemeyi kullanıp kullanmadığını tespit etmektir — böylece uygulamanın silinip yeniden yüklenmesiyle deneme süresi sınırsız şekilde yenilenemez.</li>
+  <li><strong>Sunucu saati.</strong> Deneme süresinin cihaz saati değiştirilerek uzatılmaması için sunucunun güncel saati okunur.</li>
+</ol>
+<p>Bu veriler adınız, e-postanız veya konumunuzla hiçbir zaman ilişkilendirilmez, reklam veya profil çıkarma amacıyla kullanılmaz ve Google tarafından kendi amaçları için kullanılmaz — Google yalnızca bizim adımıza veri işleyen sıfatıyla hareket eder. Her internet isteğinde olduğu gibi, bağlantı sırasında IP adresiniz Google altyapısı tarafından teknik olarak işlenir. Ağ bağlantısı yoksa kontrol atlanır ve daha sonra yeniden denenir; uygulamanın çevrimdışı işlevini hiçbir zaman engellemez.</p>
+<p><strong>Hukuki dayanak:</strong> ücretsiz denemenin kötüye kullanılmasını önlemeye ilişkin meşru menfaat (KVKK md. 5/2-f; GDPR md. 6/1-f). Özet, takma adlaştırılmış bir tanımlayıcıdır; kişisel veriyle aynı özenle işlenir.</p>
 
 <h2>İzinler</h2>
-<p>Vardora yalnızca aşağıdaki izinleri ister ve her biri doğrudan uygulamanın çekirdek işleviyle ilgilidir:</p>
+<p>Vardora yalnızca aşağıdaki izinleri ister ve her biri doğrudan hatırlatmalarla ilgilidir:</p>
 <ul>
-  <li><strong>Bildirim izni:</strong> Vardiya hatırlatmalarını gösterebilmek için.</li>
-  <li><strong>Tam zamanlı alarm izni:</strong> Hatırlatmanın seçtiğiniz saatte, dakikası dakikasına gelebilmesi için.</li>
+  <li><strong>Bildirim izni:</strong> vardiya hatırlatmalarını gösterebilmek için.</li>
+  <li><strong>Tam zamanlı alarm izni:</strong> hatırlatmanın seçtiğiniz dakikada gelebilmesi için.</li>
+  <li><strong>Tam ekran bildirim izni (Android 14 ve üstü):</strong> "Alarm gibi çal" açıkken hatırlatmanın kilitli ekranda tam ekran açılabilmesi için.</li>
+  <li><strong>Pil optimizasyonu muafiyeti (isteğe bağlı):</strong> yalnızca siz Hatırlatma Güvenilirlik Sihirbazı'ndan isterseniz; sistemin hatırlatmayı geciktirmemesi için.</li>
+  <li><strong>Önyükleme tamamlandı:</strong> cihaz yeniden başlatıldığında zamanlanmış hatırlatmaları yeniden kurmak için.</li>
+  <li><strong>İnternet:</strong> yalnızca yukarıda açıklanan iki amaç için.</li>
 </ul>
-<p>Kamera, konum, kişiler, dosyalar, mikrofon gibi hiçbir izin istenmez. Uygulama, Google Play faturalandırması ve yukarıda açıklanan deneme kötüye kullanımı önleme için gerekli olan standart, görünmez İnternet iznini beyan eder; bu izin kullanıcıya hiçbir onay ekranı çıkarmaz.</p>
+<p>Kamera, konum, kişiler, dosyalar veya mikrofon izni istenmez.</p>
 
 <h2>Üçüncü taraflarla paylaşım</h2>
 <p>Vardora hiçbir veriyi kendi amaçları için kullanılmak üzere üçüncü bir tarafla paylaşmaz, satmaz veya reklam amacıyla kullanmaz. Uygulamada reklam ağı, analitik kütüphanesi veya izleme SDK'sı bulunmaz. Google Firebase ve Google Play yalnızca bizim adımıza altyapı/ödeme sağlayıcısı olarak kullanılır, asla kendi amaçları için değil.</p>
 
 <h2>Uygulama içi satın alma</h2>
-<p>Vardora Pro satın aldığınızda, işlem Google Play'in kendi ödeme altyapısı üzerinden yürütülür. Faryah Mobile, ödeme kartı bilgilerinize erişemez; yalnızca Google Play'in bildirdiği satın alma durumunu (etkin/pasif) cihazınızda saklar.</p>
+<p>Vardora Pro satın aldığınızda işlem Google Play'in kendi ödeme altyapısı üzerinden yürütülür. Faryah Mobile ödeme kartı bilgilerinize erişemez; yalnızca Google Play'in bildirdiği satın alma durumunu cihazınızda saklar ve satın alma imzasını cihazda doğrular.</p>
 
-<h2>Veri güvenliği ve silme</h2>
-<p>Verileriniz, Android işletim sisteminin uygulamalar arası izolasyon mekanizmasıyla korunur (yalnızca Vardora erişebilir). Tüm verilerinizi silmek için uygulamayı cihazınızdan kaldırmanız yeterlidir; bu işlem geri alınamaz şekilde tüm yerel veriyi siler. Deneme kötüye kullanımı önleme için saklanan geri döndürülemez cihaz kimliği özeti kişisel veri sayılmaz ve kimliğinizle hiçbir zaman ilişkilendirilemez.</p>
+<h2>Veri güvenliği, saklama ve silme</h2>
+<ul>
+  <li>Cihazınızdaki veriler Android'in uygulama izolasyonuyla korunur (yalnızca Vardora erişebilir). Silmek için uygulamayı kaldırmanız yeterlidir.</li>
+  <li>Google Firebase ve Google Play'e giden ağ trafiği TLS ile şifrelenir.</li>
+  <li>Firebase'deki deneme kaydı (özet ve zaman damgası) yalnızca ücretsiz denemenin aynı cihazda yeniden başlatılmasını önlemek için tutulur. Bu amaç uygulama sunulduğu sürece devam ettiğinden kayıt <strong>talep üzerine silinmez</strong>: kötüye kullanım önleme, üstün meşru menfaattir (KVKK md. 7; GDPR md. 17/1-c ve 21/1). Kayıt kişisel bilgi içermez, size geri götürülemez ve başka hiçbir amaçla kullanılmaz. Deneme mekanizması bir gün kaldırılırsa tüm kayıtlar silinir.</li>
+</ul>
 
 <h2>Çocukların gizliliği</h2>
 <p>Vardora çocuklara yönelik bir uygulama değildir ve 13 yaş altı kullanıcıları hedeflemez.</p>
 
 <h2>Bu politikadaki değişiklikler</h2>
-<p>Uygulamanın veri davranışında bir değişiklik olursa bu sayfa güncellenir ve yürürlük tarihi yenilenir. Önemli değişiklikler uygulama güncelleme notlarında belirtilir.</p>
+<p>Uygulamanın veri davranışında bir değişiklik olursa bu sayfa güncellenir ve yürürlük tarihi yenilenir. Önemli değişiklikler uygulama güncelleme notlarında belirtilir. Bu sürümde eklenenler: anonim Firebase oturumu ve sunucu saati ayrıntıları, tam ekran alarm / pil / önyükleme izinleri, widget önbelleği, hukuki dayanak ve deneme kaydının saklama kuralı.</p>
 
 <h2>İletişim</h2>
 <div class="contact">
@@ -149,52 +179,67 @@
 
 <a id="de"></a>
 <h1>Vardora — Datenschutzerklärung</h1>
-<p class="meta">Entwickler: Faryah Mobile &nbsp;|&nbsp; Gültig ab: 31. August 2026 &nbsp;|&nbsp; App: Vardora (com.faryahmobile.vardora)</p>
+<p class="meta">Entwickler: Faryah Mobile &nbsp;|&nbsp; Gültig ab: 8. September 2026 (ersetzt die Fassung vom 31. August 2026) &nbsp;|&nbsp; App: Vardora (com.faryahmobile.vardora)</p>
 
 <p>Vardora ist ein Schichtkalender, der größtenteils auf deinem Gerät läuft. Diese Erklärung beschreibt genau, wie die App mit deinen Daten umgeht — nichts hier ist Standardtext, sie wurde passend zum tatsächlichen Code der App verfasst.</p>
 
 <h2>Zusammenfassung</h2>
 <ul>
-  <li><strong>Es werden keine persönlichen Daten (Name, E-Mail, Identität) gesammelt oder zu eigenen Zwecken Dritter weitergegeben.</strong></li>
+  <li><strong>Persönliche Daten wie Name, E-Mail-Adresse oder Telefonnummer werden nie abgefragt, gesammelt oder weitergegeben.</strong></li>
   <li>Die App verlangt nie ein Konto.</li>
-  <li>Alles, was du eingibst (Schichttypen, Muster, Kalenderausnahmen, Einstellungen), wird nur im lokalen Speicher deines Geräts abgelegt und verlässt ihn nie.</li>
+  <li>Alles, was du eingibst (Schichttypen, Muster, Arbeitsplätze, Kalenderausnahmen, Notizen, Lohnangaben, Erinnerungseinstellungen), wird nur im lokalen Speicher deines Geräts abgelegt und verlässt ihn nie.</li>
   <li>Die App enthält keine Werbung, Analyse- oder Tracking-SDKs.</li>
-  <li>Eine begrenzte, anonyme Netzwerkverbindung wird ausschließlich verwendet, um Missbrauch der kostenlosen Testphase zu verhindern (Deinstallieren und Neuinstallieren, um sie unbegrenzt zu verlängern) und um Vardora-Pro-Käufe abzuwickeln — siehe „Schutz vor Testphasen-Missbrauch" unten.</li>
+  <li>Das Netzwerk wird nur für zwei Dinge genutzt: eine einmalige, anonyme Prüfung gegen Missbrauch der kostenlosen Testphase (siehe „Schutz vor Testphasen-Missbrauch“) und Vardora-Pro-Käufe über Google Play.</li>
 </ul>
 
-<h2>Welche Daten werden verarbeitet?</h2>
-<p>Die Schichttypen, Schichtmuster (Zyklen), Kalenderausnahmen (Urlaub/Krankheit, Notizen) und Erinnerungseinstellungen (an/aus, Uhrzeit), die du in Vardora eingibst, werden in einer privaten SQLite-Datenbank auf deinem Gerät gespeichert. Diese Daten:</p>
+<h2>Welche Daten werden auf deinem Gerät verarbeitet?</h2>
+<p>Schichttypen, Schichtmuster (Zyklen), Arbeitsplätze, Kalenderausnahmen (Urlaub/Krankheit, Zeiten für einzelne Tage), Notizen, Stundenlohn-Angaben, Erinnerungseinstellungen (Modus, Uhrzeit, Weckerstil) und der Cache des Startbildschirm-Widgets werden im privaten Speicherbereich der App auf deinem Gerät abgelegt. Diese Daten:</p>
 <ul>
   <li>Bleiben ausschließlich auf deinem Gerät — sie werden nie an Server von Faryah Mobile oder anderswohin gesendet.</li>
-  <li>Bleiben auf deinem Gerät, bis du die App löschst; beim Deinstallieren werden sie automatisch von deinem Betriebssystem entfernt.</li>
-  <li>Können optional über Einstellungen &gt; Sichern in eine Datei exportiert werden, an einen Ort deiner Wahl (dein eigenes Google Drive, Gerätespeicher usw.) — dieser Export sendet niemals Daten an Faryah Mobile.</li>
+  <li>Bleiben auf deinem Gerät, bis du die App löschst; beim Deinstallieren entfernt sie dein Betriebssystem.</li>
+  <li>Können optional über Einstellungen &gt; Sichern / Wiederherstellen in eine Datei exportiert werden, an einen Ort deiner Wahl (dein eigenes Google Drive, Gerätespeicher usw.) — dieser Export sendet niemals Daten an Faryah Mobile.</li>
 </ul>
 
-<h2>Schutz vor Testphasen-Missbrauch</h2>
-<p>Beim Start deiner kostenlosen Testphase wird ein Einweg-Hash (SHA-256) der Hardware-Kennung deines Geräts (Android-ID) berechnet und auf der Infrastruktur von Google Firebase gespeichert. Aus diesem Hash lässt sich die ursprüngliche Gerätekennung nicht wiederherstellen. Er dient ausschließlich dazu, zu erkennen, ob dieses Gerät die kostenlose Testphase bereits genutzt hat — damit die Testphase nicht durch Deinstallieren und Neuinstallieren der App unbegrenzt verlängert werden kann. Diese Daten werden niemals mit deinem Namen, deiner E-Mail-Adresse oder deinem Standort verknüpft, nie für Werbung verwendet, und Google nutzt sie nicht für eigene Zwecke — Firebase dient ausschließlich als unser Infrastrukturanbieter (Auftragsverarbeiter). Ist keine Netzwerkverbindung verfügbar, wird diese Prüfung einfach übersprungen und später erneut versucht; sie blockiert niemals die grundlegende Offline-Funktion der App.</p>
+<h2>Schutz vor Testphasen-Missbrauch — die einzige Netzwerknutzung</h2>
+<p>Beim Start deiner kostenlosen Testphase tut die App über Google Firebase Folgendes:</p>
+<ol>
+  <li><strong>Anonyme Anmeldung.</strong> Firebase Anonymous Authentication erzeugt eine zufällige, anonyme Sitzungs-ID. Name, E-Mail-Adresse, Telefonnummer oder andere Identitätsdaten werden weder abgefragt noch gespeichert.</li>
+  <li><strong>Geräte-Hash.</strong> Ein Einweg-Hash (SHA-256) der Android-ID deines Geräts wird zusammen mit einem serverseitigen Zeitstempel des ersten Auftretens in Cloud Firestore gespeichert. Aus diesem Hash lässt sich die ursprüngliche Gerätekennung nicht wiederherstellen. Er dient ausschließlich dazu, zu erkennen, ob dieses Gerät die kostenlose Testphase bereits genutzt hat — damit die Testphase nicht durch Deinstallieren und Neuinstallieren unbegrenzt verlängert werden kann.</li>
+  <li><strong>Serverzeit.</strong> Die aktuelle Serverzeit wird gelesen, damit die Testphase nicht durch Verstellen der Geräteuhr verlängert werden kann.</li>
+</ol>
+<p>Diese Daten werden niemals mit deinem Namen, deiner E-Mail-Adresse oder deinem Standort verknüpft, nie für Werbung oder Profilbildung verwendet, und Google nutzt sie nicht für eigene Zwecke — Google handelt ausschließlich als unser Auftragsverarbeiter. Wie bei jeder Internetanfrage wird deine IP-Adresse während der Verbindung technisch von der Google-Infrastruktur verarbeitet. Ist keine Netzwerkverbindung verfügbar, wird die Prüfung übersprungen und später wiederholt; sie blockiert niemals die Offline-Funktion der App.</p>
+<p><strong>Rechtsgrundlage:</strong> berechtigtes Interesse an der Verhinderung von Missbrauch der kostenlosen Testphase (DSGVO Art. 6 Abs. 1 lit. f). Der Hash ist eine pseudonyme Kennung; wir behandeln ihn mit derselben Sorgfalt wie personenbezogene Daten.</p>
 
 <h2>Berechtigungen</h2>
-<p>Vardora fragt nur folgende Berechtigungen an, jede direkt an eine Kernfunktion gebunden:</p>
+<p>Vardora fragt nur folgende Berechtigungen an, jede direkt für Erinnerungen:</p>
 <ul>
   <li><strong>Benachrichtigungsberechtigung:</strong> um Schichterinnerungen anzuzeigen.</li>
-  <li><strong>Berechtigung für exakte Alarme:</strong> damit die Erinnerung zur genau gewählten Zeit ankommt.</li>
+  <li><strong>Berechtigung für exakte Alarme:</strong> damit die Erinnerung zur genau gewählten Minute ankommt.</li>
+  <li><strong>Vollbild-Benachrichtigungsberechtigung (ab Android 14):</strong> damit eine Erinnerung mit „Wie ein Wecker klingeln“ auf dem Sperrbildschirm im Vollbild erscheinen kann.</li>
+  <li><strong>Ausnahme von der Akku-Optimierung (optional):</strong> nur wenn du sie im Erinnerungs-Zuverlässigkeitsassistenten anforderst, damit das System Erinnerungen nicht verzögert.</li>
+  <li><strong>Neustart abgeschlossen:</strong> um geplante Erinnerungen nach einem Geräteneustart wiederherzustellen.</li>
+  <li><strong>Internet:</strong> ausschließlich für die beiden oben beschriebenen Zwecke.</li>
 </ul>
-<p>Keine Kamera-, Standort-, Kontakt-, Datei- oder Mikrofonberechtigung wird angefragt. Die App deklariert die für Google-Play-Zahlungen und den oben beschriebenen Schutz vor Testphasen-Missbrauch erforderliche, unsichtbare Standard-Internetberechtigung; sie löst nie eine Zustimmungsabfrage für Nutzer aus.</p>
+<p>Keine Kamera-, Standort-, Kontakt-, Datei- oder Mikrofonberechtigung wird angefragt.</p>
 
 <h2>Weitergabe an Dritte</h2>
 <p>Vardora teilt oder verkauft deine Daten nicht zu eigenen Zwecken Dritter und nutzt sie nicht für Werbung. Die App enthält kein Werbenetzwerk, keine Analysebibliothek und kein Tracking-SDK. Google Firebase und Google Play werden ausschließlich als Infrastruktur-/Zahlungsanbieter in unserem Auftrag genutzt, niemals für eigene Zwecke.</p>
 
 <h2>In-App-Käufe</h2>
-<p>Wenn du Vardora Pro kaufst, wird die Transaktion vollständig über das Zahlungssystem von Google Play abgewickelt. Faryah Mobile hat niemals Zugriff auf deine Zahlungskartendaten; es speichert nur den von Google Play gemeldeten Kaufstatus (aktiv/inaktiv) auf deinem Gerät.</p>
+<p>Wenn du Vardora Pro kaufst, wird die Transaktion vollständig über das Zahlungssystem von Google Play abgewickelt. Faryah Mobile hat niemals Zugriff auf deine Zahlungskartendaten; es speichert nur den von Google Play gemeldeten Kaufstatus auf deinem Gerät und prüft die Kaufsignatur auf dem Gerät.</p>
 
-<h2>Datensicherheit und -löschung</h2>
-<p>Deine Daten sind durch das App-Sandboxing von Android geschützt (nur Vardora kann darauf zugreifen). Um alle deine Daten zu löschen, deinstalliere einfach die App — dies löscht dauerhaft alle lokalen Daten. Der nicht umkehrbare Gerätekennung-Hash, der zum Schutz vor Testphasen-Missbrauch gespeichert wird, gilt nicht als personenbezogenes Datum und kann niemals mit dir in Verbindung gebracht werden.</p>
+<h2>Datensicherheit, Aufbewahrung und Löschung</h2>
+<ul>
+  <li>Daten auf deinem Gerät sind durch das App-Sandboxing von Android geschützt (nur Vardora kann darauf zugreifen). Zum Löschen deinstalliere einfach die App.</li>
+  <li>Der Netzwerkverkehr zu Google Firebase und Google Play ist mit TLS verschlüsselt.</li>
+  <li>Der Testphasen-Datensatz in Firebase (Hash und Zeitstempel) wird ausschließlich aufbewahrt, um einen Neustart der kostenlosen Testphase auf demselben Gerät zu verhindern. Da dieser Zweck fortbesteht, solange die App angeboten wird, wird der Datensatz <strong>auf Anfrage nicht gelöscht</strong>: Missbrauchsverhinderung ist ein überwiegendes berechtigtes Interesse (DSGVO Art. 17 Abs. 1 lit. c und Art. 21 Abs. 1). Der Datensatz enthält keine persönlichen Informationen, lässt sich nicht auf dich zurückführen und wird für keinen anderen Zweck verwendet. Wird der Testphasen-Mechanismus eines Tages eingestellt, werden alle Datensätze gelöscht.</li>
+</ul>
 
 <h2>Datenschutz für Kinder</h2>
 <p>Vardora richtet sich nicht an Kinder und zielt nicht auf Nutzer unter 13 Jahren ab.</p>
 
 <h2>Änderungen dieser Erklärung</h2>
-<p>Sollte sich das Datenverhalten der App ändern, wird diese Seite aktualisiert und das Gültigkeitsdatum angepasst. Wesentliche Änderungen werden in den Update-Hinweisen der App vermerkt.</p>
+<p>Sollte sich das Datenverhalten der App ändern, wird diese Seite aktualisiert und das Gültigkeitsdatum angepasst. Wesentliche Änderungen werden in den Update-Hinweisen der App vermerkt. Diese Fassung ergänzt die anonyme Firebase-Anmeldung und die Serverzeit, die Berechtigungen für Vollbild-Wecker, Akku und Neustart, den Widget-Cache, die Rechtsgrundlage und die Aufbewahrungsregel für den Testphasen-Datensatz.</p>
 
 <h2>Kontakt</h2>
 <div class="contact">
@@ -206,52 +251,67 @@
 
 <a id="es"></a>
 <h1>Vardora — Política de Privacidad</h1>
-<p class="meta">Desarrollador: Faryah Mobile &nbsp;|&nbsp; Fecha de vigencia: 31 de agosto de 2026 &nbsp;|&nbsp; App: Vardora (com.faryahmobile.vardora)</p>
+<p class="meta">Desarrollador: Faryah Mobile &nbsp;|&nbsp; Fecha de vigencia: 8 de septiembre de 2026 (sustituye a la versión del 31 de agosto de 2026) &nbsp;|&nbsp; App: Vardora (com.faryahmobile.vardora)</p>
 
 <p>Vardora es un calendario de turnos que funciona principalmente en tu dispositivo. Esta política describe exactamente cómo la app maneja tus datos — nada aquí es texto genérico; está escrita para coincidir con el código real de la app.</p>
 
 <h2>Resumen</h2>
 <ul>
-  <li><strong>Ningún dato personal (tu nombre, correo electrónico o identidad) se recopila ni se comparte con terceros para sus propios fines.</strong></li>
+  <li><strong>Nunca se pide, recopila ni comparte ningún dato personal como tu nombre, correo electrónico o número de teléfono.</strong></li>
   <li>La app nunca te pide crear una cuenta.</li>
-  <li>Todo lo que ingresas (tipos de turno, patrones, excepciones del calendario, ajustes) se guarda únicamente en el almacenamiento local de tu dispositivo y nunca sale de él.</li>
+  <li>Todo lo que ingresas (tipos de turno, patrones, lugares de trabajo, excepciones del calendario, notas, salarios, ajustes de recordatorio) se guarda únicamente en el almacenamiento local de tu dispositivo y nunca sale de él.</li>
   <li>La app no contiene publicidad, análisis ni SDKs de rastreo.</li>
-  <li>Se usa una conexión de red limitada y anónima únicamente para evitar el abuso del período de prueba gratuito (desinstalar y reinstalar para renovarlo indefinidamente) y para procesar las compras de Vardora Pro — consulta "Prevención de abuso del período de prueba" más abajo.</li>
+  <li>La red se usa solo para dos cosas: una verificación anónima y única que evita el abuso del período de prueba gratuito (ver "Prevención de abuso del período de prueba") y las compras de Vardora Pro a través de Google Play.</li>
 </ul>
 
-<h2>¿Qué datos se procesan?</h2>
-<p>Los tipos de turno, patrones de turno (ciclos), excepciones del calendario (días de permiso/enfermedad, notas) y preferencias de recordatorio (activado/desactivado, hora) que ingresas en Vardora se guardan en una base de datos SQLite privada en tu dispositivo. Estos datos:</p>
+<h2>¿Qué datos se procesan en tu dispositivo?</h2>
+<p>Los tipos de turno, patrones de turno (ciclos), lugares de trabajo, excepciones del calendario (permisos/enfermedad, horarios de un día), notas, salarios por hora, preferencias de recordatorio (modo, hora, estilo de alarma) y la caché que usa el widget de pantalla de inicio se guardan en el almacenamiento privado de la app en tu dispositivo. Estos datos:</p>
 <ul>
   <li>Permanecen únicamente en tu dispositivo — nunca se envían a los servidores de Faryah Mobile ni a ningún otro lugar.</li>
-  <li>Permanecen en tu dispositivo hasta que eliminas la app; al desinstalarla, tu sistema operativo los borra automáticamente.</li>
-  <li>Opcionalmente puedes exportarlos a un archivo desde Ajustes &gt; Copia de seguridad, al lugar que elijas (tu propio Google Drive, almacenamiento del dispositivo, etc.) — esta exportación nunca envía datos a Faryah Mobile.</li>
+  <li>Permanecen en tu dispositivo hasta que eliminas la app; al desinstalarla, tu sistema operativo los borra.</li>
+  <li>Opcionalmente puedes exportarlos a un archivo desde Ajustes &gt; Copia de seguridad / Restaurar, al lugar que elijas (tu propio Google Drive, almacenamiento del dispositivo, etc.) — esta exportación nunca envía datos a Faryah Mobile.</li>
 </ul>
 
-<h2>Prevención de abuso del período de prueba</h2>
-<p>Cuando comienza tu período de prueba gratuito, se calcula un resumen unidireccional (SHA-256) del identificador de hardware de tu dispositivo (Android ID) y se guarda en la infraestructura de Google Firebase. No es posible recuperar el identificador original del dispositivo a partir de este resumen. Su único propósito es detectar si este dispositivo ya ha usado el período de prueba gratuito, para que no pueda renovarse indefinidamente desinstalando y reinstalando la app. Estos datos nunca se vinculan a tu nombre, correo electrónico o ubicación, nunca se usan con fines publicitarios, y Google no los utiliza para sus propios fines — Firebase actúa únicamente como nuestro proveedor de infraestructura (encargado del tratamiento). Si no hay conexión de red disponible, esta verificación simplemente se omite y se reintenta más tarde; nunca bloquea la funcionalidad principal sin conexión de la app.</p>
+<h2>Prevención de abuso del período de prueba — el único uso de red</h2>
+<p>Cuando comienza tu período de prueba gratuito, la app hace lo siguiente a través de Google Firebase:</p>
+<ol>
+  <li><strong>Inicio de sesión anónimo.</strong> Firebase Anonymous Authentication crea un ID de sesión aleatorio y anónimo. No se pide ni se guarda nombre, correo, teléfono ni ninguna otra identidad.</li>
+  <li><strong>Resumen del dispositivo.</strong> Se guarda en Cloud Firestore un resumen unidireccional (SHA-256) del Android ID de tu dispositivo, junto con una marca de tiempo del servidor de "primera detección". No es posible recuperar el identificador original a partir de este resumen. Su único propósito es detectar si este dispositivo ya ha usado la prueba gratuita, para que no pueda renovarse indefinidamente desinstalando y reinstalando la app.</li>
+  <li><strong>Hora del servidor.</strong> Se lee la hora actual del servidor para que la prueba no pueda extenderse cambiando el reloj del dispositivo.</li>
+</ol>
+<p>Estos datos nunca se vinculan a tu nombre, correo o ubicación, nunca se usan con fines publicitarios o de perfiles, y Google no los utiliza para sus propios fines — Google actúa únicamente como nuestro encargado del tratamiento. Como en cualquier solicitud de internet, tu dirección IP es procesada técnicamente por la infraestructura de Google durante la conexión. Si no hay conexión disponible, la verificación se omite y se reintenta más tarde; nunca bloquea la funcionalidad sin conexión de la app.</p>
+<p><strong>Base legal:</strong> interés legítimo en prevenir el abuso de la prueba gratuita (RGPD art. 6.1.f). El resumen es un identificador seudónimo; lo tratamos con el mismo cuidado que un dato personal.</p>
 
 <h2>Permisos</h2>
-<p>Vardora solo solicita los siguientes permisos, cada uno ligado directamente a una función principal:</p>
+<p>Vardora solo solicita los siguientes permisos, todos ligados directamente a los recordatorios:</p>
 <ul>
   <li><strong>Permiso de notificaciones:</strong> para mostrar recordatorios de turno.</li>
-  <li><strong>Permiso de alarmas exactas:</strong> para que el recordatorio llegue exactamente a la hora elegida.</li>
+  <li><strong>Permiso de alarmas exactas:</strong> para que el recordatorio llegue exactamente en el minuto elegido.</li>
+  <li><strong>Permiso de notificación a pantalla completa (Android 14 y posteriores):</strong> para que un recordatorio con "Sonar como alarma" pueda abrirse a pantalla completa en la pantalla de bloqueo.</li>
+  <li><strong>Exención de la optimización de batería (opcional):</strong> solo si la pides en el Asistente de fiabilidad de recordatorios, para que el sistema no retrase los recordatorios.</li>
+  <li><strong>Arranque completado:</strong> para restaurar los recordatorios programados tras reiniciar el dispositivo.</li>
+  <li><strong>Internet:</strong> únicamente para los dos fines descritos arriba.</li>
 </ul>
-<p>No se solicita ningún permiso de cámara, ubicación, contactos, archivos ni micrófono. La app declara el permiso de Internet estándar e invisible, necesario para la facturación de Google Play y la prevención de abuso del período de prueba descrita arriba; nunca genera una pantalla de consentimiento para el usuario.</p>
+<p>No se solicita ningún permiso de cámara, ubicación, contactos, archivos ni micrófono.</p>
 
 <h2>Compartir con terceros</h2>
 <p>Vardora no comparte datos con terceros para sus propios fines, ni los vende, ni los usa con fines publicitarios. La app no contiene ninguna red publicitaria, biblioteca de análisis ni SDK de rastreo. Google Firebase y Google Play se usan estrictamente como proveedores de infraestructura/pago en nuestro nombre, nunca para sus propios fines.</p>
 
 <h2>Compras dentro de la app</h2>
-<p>Cuando compras Vardora Pro, la transacción se procesa completamente a través del sistema de facturación de Google Play. Faryah Mobile nunca tiene acceso a los datos de tu tarjeta de pago; solo guarda el estado de la compra (activo/inactivo) informado por Google Play, en tu dispositivo.</p>
+<p>Cuando compras Vardora Pro, la transacción se procesa completamente a través del sistema de facturación de Google Play. Faryah Mobile nunca tiene acceso a los datos de tu tarjeta; solo guarda en tu dispositivo el estado de la compra informado por Google Play y verifica la firma de la compra en el dispositivo.</p>
 
-<h2>Seguridad y eliminación de datos</h2>
-<p>Tus datos están protegidos por el aislamiento de aplicaciones de Android (solo Vardora puede acceder a ellos). Para eliminar todos tus datos, simplemente desinstala la app — esto borra permanentemente todos los datos locales. El resumen irreversible del identificador del dispositivo, guardado para la prevención de abuso del período de prueba, no se considera un dato personal y nunca puede vincularse a ti.</p>
+<h2>Seguridad, conservación y eliminación de datos</h2>
+<ul>
+  <li>Los datos de tu dispositivo están protegidos por el aislamiento de aplicaciones de Android (solo Vardora puede acceder a ellos). Para eliminarlos, simplemente desinstala la app.</li>
+  <li>El tráfico de red hacia Google Firebase y Google Play se cifra con TLS.</li>
+  <li>El registro de prueba en Firebase (resumen y marca de tiempo) se conserva únicamente para evitar que la prueba gratuita se reinicie en el mismo dispositivo. Como esa finalidad persiste mientras la app se ofrezca, el registro <strong>no se elimina a petición</strong>: la prevención de abusos es un interés legítimo imperioso (RGPD art. 17.1.c y 21.1). El registro no contiene información personal, no puede rastrearse hasta ti y no se usa para ningún otro fin. Si el mecanismo de prueba se retira algún día, todos los registros se eliminarán.</li>
+</ul>
 
 <h2>Privacidad de menores</h2>
 <p>Vardora no está dirigida a niños y no está pensada para usuarios menores de 13 años.</p>
 
 <h2>Cambios a esta política</h2>
-<p>Si el comportamiento de datos de la app cambia, esta página se actualizará y se revisará la fecha de vigencia. Los cambios importantes se indicarán en las notas de actualización de la app.</p>
+<p>Si el comportamiento de datos de la app cambia, esta página se actualiza y se revisa la fecha de vigencia. Los cambios importantes se indican en las notas de actualización de la app. Esta versión añade el inicio de sesión anónimo de Firebase y la hora del servidor, los permisos de alarma a pantalla completa, batería y arranque, la caché del widget, la base legal y la regla de conservación del registro de prueba.</p>
 
 <h2>Contacto</h2>
 <div class="contact">
@@ -263,52 +323,67 @@
 
 <a id="pt"></a>
 <h1>Vardora — Política de Privacidade</h1>
-<p class="meta">Desenvolvedor: Faryah Mobile &nbsp;|&nbsp; Data de vigência: 31 de agosto de 2026 &nbsp;|&nbsp; App: Vardora (com.faryahmobile.vardora)</p>
+<p class="meta">Desenvolvedor: Faryah Mobile &nbsp;|&nbsp; Data de vigência: 8 de setembro de 2026 (substitui a versão de 31 de agosto de 2026) &nbsp;|&nbsp; App: Vardora (com.faryahmobile.vardora)</p>
 
 <p>O Vardora é um calendário de turnos que funciona majoritariamente no seu aparelho. Esta política descreve exatamente como o app trata os seus dados — nada aqui é texto genérico; foi escrita para corresponder ao código real do app.</p>
 
 <h2>Resumo</h2>
 <ul>
-  <li><strong>Nenhum dado pessoal (seu nome, e-mail ou identidade) é coletado ou compartilhado com terceiros para fins próprios.</strong></li>
+  <li><strong>Nenhum dado pessoal, como nome, e-mail ou telefone, é pedido, coletado ou compartilhado.</strong></li>
   <li>O app nunca pede para você criar uma conta.</li>
-  <li>Tudo o que você insere (tipos de turno, escalas, exceções de calendário, configurações) é armazenado apenas no armazenamento local do seu aparelho e nunca sai dele.</li>
+  <li>Tudo o que você insere (tipos de turno, escalas, locais de trabalho, exceções de calendário, observações, valores de hora, configurações de lembrete) é armazenado apenas no armazenamento local do seu aparelho e nunca sai dele.</li>
   <li>O app não contém publicidade, análise nem SDKs de rastreamento.</li>
-  <li>Uma conexão de rede limitada e anônima é usada apenas para evitar abuso do período de teste gratuito (desinstalar e reinstalar para renová-lo indefinidamente) e para processar compras do Vardora Pro — veja "Prevenção de abuso do período de teste" abaixo.</li>
+  <li>A rede é usada apenas para duas coisas: uma verificação anônima e única que evita abuso do período de teste gratuito (veja "Prevenção de abuso do período de teste") e compras do Vardora Pro pelo Google Play.</li>
 </ul>
 
-<h2>Quais dados são processados?</h2>
-<p>Os tipos de turno, escalas de turno (ciclos), exceções de calendário (folgas/atestados, notas) e preferências de lembrete (ativado/desativado, horário) que você insere no Vardora são armazenados num banco de dados SQLite privado no seu aparelho. Esses dados:</p>
+<h2>Quais dados são processados no seu aparelho?</h2>
+<p>Tipos de turno, escalas de turno (ciclos), locais de trabalho, exceções de calendário (folgas/atestados, horários de um dia), observações, valores de hora, preferências de lembrete (modo, horário, estilo de alarme) e o cache usado pelo widget da tela inicial ficam no armazenamento privado do app no seu aparelho. Esses dados:</p>
 <ul>
   <li>Ficam apenas no seu aparelho — nunca são enviados aos servidores da Faryah Mobile nem a nenhum outro lugar.</li>
-  <li>Permanecem no seu aparelho até você excluir o app; ao desinstalar, são apagados automaticamente pelo seu sistema operacional.</li>
-  <li>Podem ser exportados opcionalmente para um arquivo em Ajustes &gt; Backup, no local que você escolher (seu próprio Google Drive, armazenamento do aparelho etc.) — essa exportação nunca envia dados para a Faryah Mobile.</li>
+  <li>Permanecem no seu aparelho até você excluir o app; ao desinstalar, são apagados pelo seu sistema operacional.</li>
+  <li>Podem ser exportados opcionalmente para um arquivo em Configurações &gt; Backup / Restaurar, no local que você escolher (seu próprio Google Drive, armazenamento do aparelho etc.) — essa exportação nunca envia dados para a Faryah Mobile.</li>
 </ul>
 
-<h2>Prevenção de abuso do período de teste</h2>
-<p>Quando seu período de teste gratuito começa, um resumo unidirecional (SHA-256) do identificador de hardware do seu aparelho (Android ID) é calculado e armazenado na infraestrutura do Google Firebase. Não é possível recuperar o identificador original do aparelho a partir desse resumo. Seu único propósito é detectar se este aparelho já usou o período de teste gratuito, para que ele não possa ser renovado indefinidamente ao desinstalar e reinstalar o app. Esses dados nunca são vinculados ao seu nome, e-mail ou localização, nunca são usados para fins publicitários, e o Google não os usa para fins próprios — o Firebase atua apenas como nosso provedor de infraestrutura (operador de dados). Se não houver conexão de rede disponível, essa verificação é simplesmente ignorada e tentada novamente depois; ela nunca bloqueia a funcionalidade principal offline do app.</p>
+<h2>Prevenção de abuso do período de teste — o único uso de rede</h2>
+<p>Quando seu período de teste gratuito começa, o app faz o seguinte pelo Google Firebase:</p>
+<ol>
+  <li><strong>Login anônimo.</strong> O Firebase Anonymous Authentication cria um ID de sessão aleatório e anônimo. Nome, e-mail, telefone ou qualquer outra identidade não são pedidos nem armazenados.</li>
+  <li><strong>Resumo do aparelho.</strong> Um resumo unidirecional (SHA-256) do Android ID do seu aparelho é gravado no Cloud Firestore junto com um carimbo de data/hora do servidor da "primeira detecção". Não é possível recuperar o identificador original a partir desse resumo. Seu único propósito é detectar se este aparelho já usou o teste gratuito, para que ele não possa ser renovado indefinidamente ao desinstalar e reinstalar o app.</li>
+  <li><strong>Hora do servidor.</strong> A hora atual do servidor é lida para que o teste não possa ser estendido mudando o relógio do aparelho.</li>
+</ol>
+<p>Esses dados nunca são vinculados ao seu nome, e-mail ou localização, nunca são usados para publicidade ou perfis, e o Google não os usa para fins próprios — o Google atua apenas como nosso operador de dados. Como em qualquer solicitação de internet, seu endereço IP é processado tecnicamente pela infraestrutura do Google durante a conexão. Se não houver conexão disponível, a verificação é ignorada e tentada novamente depois; ela nunca bloqueia a funcionalidade offline do app.</p>
+<p><strong>Base legal:</strong> legítimo interesse na prevenção de abuso do teste gratuito (LGPD art. 7, IX; GDPR art. 6(1)(f)). O resumo é um identificador pseudonimizado; nós o tratamos com o mesmo cuidado de um dado pessoal.</p>
 
 <h2>Permissões</h2>
-<p>O Vardora solicita apenas as seguintes permissões, cada uma ligada diretamente a uma função principal:</p>
+<p>O Vardora solicita apenas as seguintes permissões, todas ligadas diretamente aos lembretes:</p>
 <ul>
   <li><strong>Permissão de notificação:</strong> para exibir lembretes de turno.</li>
-  <li><strong>Permissão de alarme exato:</strong> para o lembrete chegar exatamente na hora escolhida.</li>
+  <li><strong>Permissão de alarme exato:</strong> para o lembrete chegar exatamente no minuto escolhido.</li>
+  <li><strong>Permissão de notificação em tela cheia (Android 14 e posteriores):</strong> para que um lembrete com "Tocar como alarme" possa abrir em tela cheia na tela de bloqueio.</li>
+  <li><strong>Isenção da otimização de bateria (opcional):</strong> só se você pedir no Assistente de confiabilidade dos lembretes, para o sistema não atrasar os lembretes.</li>
+  <li><strong>Inicialização concluída:</strong> para restaurar os lembretes agendados após reiniciar o aparelho.</li>
+  <li><strong>Internet:</strong> apenas para as duas finalidades descritas acima.</li>
 </ul>
-<p>Nenhuma permissão de câmera, localização, contatos, arquivos ou microfone é solicitada. O app declara a permissão de Internet padrão e invisível, necessária para a cobrança do Google Play e a prevenção de abuso do período de teste descrita acima; ela nunca gera uma tela de consentimento para o usuário.</p>
+<p>Nenhuma permissão de câmera, localização, contatos, arquivos ou microfone é solicitada.</p>
 
 <h2>Compartilhamento com terceiros</h2>
 <p>O Vardora não compartilha dados com terceiros para fins próprios, nem os vende, nem os usa para publicidade. O app não contém nenhuma rede de anúncios, biblioteca de análise ou SDK de rastreamento. O Google Firebase e o Google Play são usados estritamente como provedores de infraestrutura/pagamento em nosso nome, nunca para fins próprios.</p>
 
 <h2>Compras no aplicativo</h2>
-<p>Quando você compra o Vardora Pro, a transação é processada totalmente pelo sistema de cobrança do Google Play. A Faryah Mobile nunca tem acesso aos dados do seu cartão de pagamento; ela apenas armazena o status da compra (ativo/inativo) informado pelo Google Play, no seu aparelho.</p>
+<p>Quando você compra o Vardora Pro, a transação é processada totalmente pelo sistema de cobrança do Google Play. A Faryah Mobile nunca tem acesso aos dados do seu cartão; ela apenas armazena no seu aparelho o status da compra informado pelo Google Play e verifica a assinatura da compra no aparelho.</p>
 
-<h2>Segurança e exclusão de dados</h2>
-<p>Seus dados são protegidos pelo isolamento de aplicativos do Android (só o Vardora pode acessá-los). Para excluir todos os seus dados, basta desinstalar o app — isso apaga permanentemente todos os dados locais. O resumo irreversível do identificador do aparelho, armazenado para prevenção de abuso do período de teste, não é considerado dado pessoal e nunca pode ser vinculado a você.</p>
+<h2>Segurança, retenção e exclusão de dados</h2>
+<ul>
+  <li>Os dados no seu aparelho são protegidos pelo isolamento de aplicativos do Android (só o Vardora pode acessá-los). Para apagá-los, basta desinstalar o app.</li>
+  <li>O tráfego de rede para o Google Firebase e o Google Play é criptografado com TLS.</li>
+  <li>O registro de teste no Firebase (resumo e carimbo de data/hora) é mantido apenas para impedir que o teste gratuito seja reiniciado no mesmo aparelho. Como essa finalidade persiste enquanto o app for oferecido, o registro <strong>não é apagado a pedido</strong>: a prevenção de abuso é um legítimo interesse preponderante (GDPR art. 17(1)(c) e 21(1); LGPD art. 16, II). O registro não contém informações pessoais, não pode ser rastreado até você e não é usado para nenhum outro fim. Se o mecanismo de teste for descontinuado um dia, todos os registros serão apagados.</li>
+</ul>
 
 <h2>Privacidade infantil</h2>
 <p>O Vardora não é direcionado a crianças e não visa usuários menores de 13 anos.</p>
 
 <h2>Alterações nesta política</h2>
-<p>Se o comportamento de dados do app mudar, esta página será atualizada e a data de vigência será revisada. Mudanças importantes serão indicadas nas notas de atualização do app.</p>
+<p>Se o comportamento de dados do app mudar, esta página será atualizada e a data de vigência será revisada. Mudanças importantes serão indicadas nas notas de atualização do app. Esta versão acrescenta o login anônimo do Firebase e a hora do servidor, as permissões de alarme em tela cheia, bateria e inicialização, o cache do widget, a base legal e a regra de retenção do registro de teste.</p>
 
 <h2>Contato</h2>
 <div class="contact">
